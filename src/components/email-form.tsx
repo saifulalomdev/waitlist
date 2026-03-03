@@ -28,6 +28,7 @@ export function EmailForm() {
     setIsPending(true);
     const { data, error } = await actions.subscribe(values);
     setIsPending(false);
+    console.log(data , error)
 
     if (error) {
       form.setError("email", { message: error.message });

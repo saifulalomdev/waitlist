@@ -1,22 +1,32 @@
 import { defineAction } from "astro:actions";
 import { drizzle } from 'drizzle-orm/d1';
 import { subscribers, subscriberSchema } from "@/db/schema";
+import { count } from "drizzle-orm";
 
 export const server = {
     subscribe: defineAction({
+        
         input: subscriberSchema as any,
 
         handler: async (input, context) => {
-            const runtime = context.locals.runtime;
-            if (!runtime) throw new Error("Cloudflare runtime not found");
+            try {
+                const runtime = context.locals.runtime;
+                if (!runtime) throw new Error("Cloudflare runtime not found");
 
-            const db = drizzle(runtime.env.DB);
+                const db = drizzle(runtime.env.DB);
 
-            const result = await db.insert(subscribers).values({
-                email: input.email,
-            }).returning();
+                await db.insert(subscribers).values({
+                    email: input.email,
+                }).returning();
 
-            return { success: true, data: result[0] };
+                const totalEmails = await db
+                    .select({ value: count() })
+                    .from(subscribers);
+
+                return { success: true, data: { totalSubscribers: totalEmails[0].value } };
+            } catch (err) {
+                return { success: false, error: (err as any).message };
+            }
         },
     }),
 };
