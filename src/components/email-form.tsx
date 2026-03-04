@@ -1,4 +1,3 @@
-// src/components/MyForm.tsx
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
@@ -17,6 +16,7 @@ import { useState } from "react"
 
 export function EmailForm() {
   const [isPending, setIsPending] = useState(false);
+  
   const form = useForm<Subscriber>({
     resolver: zodResolver(subscriberSchema),
     defaultValues: {
@@ -26,35 +26,52 @@ export function EmailForm() {
 
   async function onSubmit(values: Subscriber) {
     setIsPending(true);
-    const {data, error } = await actions.subscribe(values);
+    
+    // Astro actions return an object with { data, error }
+    const { data, error } = await actions.subscribe(values);
+    
     setIsPending(false);
-    console.log(data?.success , error)
+
+    if (error) {
+      // Handle server-side validation or runtime errors
+      alert(`Error: ${error.message}`);
+      return;
+    }
 
     if (data?.success) {
-      // form.setError("email", { message: error.message });
-    } else {
-      alert("Welcome to the waitlist!");
+      // Use the message we defined in the backend for the alert
+      alert(data.message || "Welcome to the waitlist!");
+      
+      // Only reset the form if it was a brand new subscription
+      if (data.newSubscriber) {
+        form.reset();
+      }
     }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 max-w-sm w-full">
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Join the Waitlist</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="jon@example.com" {...field} />
+                <Input 
+                  type="email" 
+                  placeholder="name@domain.com" 
+                  disabled={isPending}
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? "Joining..." : "Join Waitlist"}
+          {isPending ? "Connecting..." : "Get Early Access"}
         </Button>
       </form>
     </Form>
