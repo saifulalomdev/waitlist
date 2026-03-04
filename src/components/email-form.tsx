@@ -26,15 +26,14 @@ export function EmailForm() {
 
   async function onSubmit(values: Subscriber) {
     setIsPending(true);
-    const { data, error } = await actions.subscribe(values);
+    const {data, error } = await actions.subscribe(values);
     setIsPending(false);
-    console.log(data , error)
+    console.log(data?.success , error)
 
-    if (error) {
-      form.setError("email", { message: error.message });
+    if (data?.success) {
+      // form.setError("email", { message: error.message });
     } else {
       alert("Welcome to the waitlist!");
-      form.reset();
     }
   }
 
