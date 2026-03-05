@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { Toaster } from "@/components/ui/sonner"
 import {
   Form,
   FormControl,
@@ -15,7 +17,7 @@ import { useState } from "react"
 
 export function EmailForm() {
   const [isPending, setIsPending] = useState(false);
-  
+
   const form = useForm<Subscriber>({
     resolver: zodResolver(subscriberSchema),
     defaultValues: {
@@ -25,19 +27,19 @@ export function EmailForm() {
 
   async function onSubmit(values: Subscriber) {
     setIsPending(true);
-    
+
     const { data, error } = await actions.subscribe(values);
-    
+
     setIsPending(false);
 
     if (error) {
-      alert(`Error: ${error.message}`);
+      toast.error(error.message || "Something went wrong!")
       return;
     }
 
     if (data?.success) {
-      alert(data.message || "Welcome to the waitlist!");
-      
+      toast.success(data.message || "Welcome to the waitlist!")
+
       if (data.newSubscriber) {
         form.reset();
       }
@@ -46,6 +48,7 @@ export function EmailForm() {
 
   return (
     <Form {...form}>
+      <Toaster />
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-start gap-3 max-w-sm w-full">
         <FormField
           control={form.control}
@@ -53,11 +56,11 @@ export function EmailForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input 
-                  type="email" 
-                  placeholder="name@domain.com" 
+                <Input
+                  type="email"
+                  placeholder="name@domain.com"
                   disabled={isPending}
-                  {...field} 
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
