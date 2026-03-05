@@ -51,13 +51,12 @@ export function EmailForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 max-w-sm w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-end gap-3 max-w-sm w-full">
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Join the Waitlist</FormLabel>
               <FormControl>
                 <Input 
                   type="email" 
@@ -70,8 +69,8 @@ export function EmailForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? "Connecting..." : "Get Early Access"}
+        <Button type="submit" className="" disabled={isPending}>
+          {isPending ? "joining..." : "Join now"}
         </Button>
       </form>
     </Form>
