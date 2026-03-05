@@ -1,11 +1,31 @@
 ---
 // src/pages/index.astro
-import { EmailForm } from '@/components/email-form';
-import Layout from '../layouts/Layout.astro';
-import '../styles/global.css'
+import { EmailForm } from "@/components/email-form";
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
 ---
 
-
 <Layout>
-	<EmailForm client:visible/>
+	<main class="grid grid-cols-1 place-items-center md:grid-cols-2 w-full h-dvh">
+		<div class="space-y-6 p-10">
+			<p class="text-[12px] font-semibold px-2 bg-gray-200 inline-block">
+				Launching NOV 24th, 2026
+			</p>
+			<h1 class="text-[40px] font-bold leading-12">
+				Build a community before you build your product
+			</h1>
+			<p class="text-[16px] text-gray-500">A minimalist space to share your journey, gather your tribe, and notify your supporters when your latest work is ready.</p>
+			<EmailForm client:visible />
+			<div class="flex items-center gap-3 pt-6">
+				<img src="/avatars.png" alt="Users avatar" />
+				<p class="text-[12px] text-gray-500">163+ makers have already joined</p>
+			</div>
+		</div>
+
+		<img
+			src="/side-image.png"
+			alt="side-image"
+			class="w-full h-full object-cover hidden md:block"
+		/>
+	</main>
 </Layout>
