@@ -6,26 +6,43 @@ import "../styles/global.css";
 ---
 
 <Layout>
-	<main class="grid grid-cols-1 place-items-center md:grid-cols-2 w-full h-dvh">
-		<div class="space-y-6 p-10">
-			<p class="text-[12px] font-semibold px-2 bg-gray-200 inline-block">
-				Launching NOV 24th, 2026
-			</p>
-			<h1 class="text-[40px] font-bold leading-12">
-				Build a community before you build your product
-			</h1>
-			<p class="text-[16px] text-gray-500">A minimalist space to share your journey, gather your tribe, and notify your supporters when your latest work is ready.</p>
-			<EmailForm client:visible />
-			<div class="flex items-center gap-3 pt-6">
-				<img src="/avatars.png" alt="Users avatar" />
-				<p class="text-[12px] text-gray-500">163+ makers have already joined</p>
-			</div>
-		</div>
+	<main class="w-full h-dvh grid grid-cols-1 md:grid-cols-2 overflow-hidden">
+		<div class="flex flex-col justify-between p-10">
+			<img src="/site-logo.png" alt="site-logo" class="w-40" />
+			<div class="space-y-6">
+				<p
+					class="text-[12px] font-semibold px-2 py-1 rounded-sm bg-gray-200 inline-block"
+				>
+					Launching NOV 24th, 2026
+				</p>
+				<h1 class="text-[40px] font-bold leading-12">
+					Deep insights. Zero tracking.
+				</h1>
+				<p class="text-[16px] text-gray-500">
+					Most analytics tools are heavy and invasive. TrackFlow is
+					light, private, and built for the modern web. Get early
+					access.
+				</p>
 
-		<img
-			src="/side-image.png"
-			alt="side-image"
-			class="w-full h-full object-cover hidden md:block"
-		/>
+				<EmailForm client:visible />
+
+				<div class="flex items-center gap-3 pt-6">
+					<img src="/avatars.png" alt="Users avatar" />
+					<p class="text-[12px] text-gray-500">
+						1000+ users have already joined
+					</p>
+				</div>
+			</div>
+			<p class="text-[16px] text-gray-500">
+				@ 2026 - All rights reserved.
+			</p>
+		</div>
+		<div class="hidden md:block relative w-full h-full overflow-hidden">
+			<img
+				src="/side-image.png"
+				alt="side-image"
+				class="absolute inset-0 w-full h-full object-bottom object-cover"
+			/>
+		</div>
 	</main>
 </Layout>
