@@ -6,7 +6,7 @@ import "../styles/global.css";
 ---
 
 <Layout>
-	<main class="w-full h-dvh grid grid-cols-1 md:grid-cols-2 overflow-hidden">
+	<main class="w-full h-dvh grid grid-cols-1 md:grid-cols-2">
 		<div class="flex flex-col justify-between p-10">
 			<img src="/site-logo.png" alt="site-logo" class="w-40" />
 			<div class="space-y-6">
@@ -27,7 +27,15 @@ import "../styles/global.css";
 				<EmailForm client:visible />
 
 				<div class="flex items-center gap-3 pt-6">
-					<img src="/avatars.png" alt="Users avatar" />
+					<img
+						src="/avatars.png"
+						alt="User avatars"
+						width="100"
+						height="40"
+						loading="lazy"
+						decoding="async"
+						class="h-auto w-auto"
+					/>
 					<p class="text-[12px] text-gray-500">
 						1000+ users have already joined
 					</p>
